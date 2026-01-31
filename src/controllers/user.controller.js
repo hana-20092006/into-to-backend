@@ -76,7 +76,31 @@
         })
     }
  }
+ const logoutUser = async (req,res) => {
+    try {
+        // get their email and log them out
+        const { email } = req.body;
+        // find the user to be logged out
+        const user = await User.findOne({
+            email
+        });
+        // can't find the user
+        if (!user) return res.status(404).json({
+            message: "User not found"
+        });
+        // if user is found
+        res.status(200).json({
+            message: "Logout successful"
+        });
+    }
+    catch (error) {
+        res.status(500).json({
+            message: "Internal server error"
+        });
+    }
+ }
  export {
     registerUser,
-    loginUser
+    loginUser,
+    logoutUser
  }
